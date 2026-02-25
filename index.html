@@ -1,86 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BIJO AI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIJO AI | Automate Your Business</title>
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family: 'Segoe UI', sans-serif;
-        }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
 
-        body{
-            height:100vh;
-            background: linear-gradient(135deg,#020024,#090979,#00d4ff);
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            color:white;
-        }
+body{
+background:linear-gradient(135deg,#0f0c29,#302b63,#00c6ff);
+color:white;
+scroll-behavior:smooth;
+}
 
-        .container{
-            text-align:center;
-            backdrop-filter: blur(15px);
-            padding:60px;
-            border-radius:20px;
-            background: rgba(255,255,255,0.08);
-            box-shadow:0 0 40px rgba(0,0,0,0.4);
-        }
+nav{
+display:flex;
+justify-content:space-between;
+padding:20px 50px;
+position:fixed;
+width:100%;
+top:0;
+background:rgba(0,0,0,0.2);
+backdrop-filter:blur(10px);
+}
 
-        h1{
-            font-size:4rem;
-            letter-spacing:3px;
-        }
+nav h2{color:#00ffe7}
 
-        p{
-            margin-top:20px;
-            font-size:1.2rem;
-            opacity:0.8;
-        }
+nav a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+}
 
-        .btn{
-            margin-top:40px;
-            padding:12px 25px;
-            border:none;
-            border-radius:30px;
-            background:#00f0ff;
-            color:black;
-            font-weight:bold;
-            cursor:pointer;
-            transition:0.3s;
-        }
+section{
+padding:100px 50px;
+text-align:center;
+}
 
-        .btn:hover{
-            transform:scale(1.1);
-            background:white;
-        }
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
 
-        footer{
-            margin-top:40px;
-            font-size:0.9rem;
-            opacity:0.6;
-        }
-    </style>
+.hero h1{
+font-size:50px;
+margin-bottom:20px;
+}
+
+.hero p{
+font-size:20px;
+margin-bottom:30px;
+}
+
+.btn{
+padding:12px 25px;
+background:#00ffe7;
+border:none;
+border-radius:30px;
+color:black;
+cursor:pointer;
+text-decoration:none;
+}
+
+.services{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin-top:40px;
+}
+
+.card{
+background:rgba(255,255,255,0.1);
+padding:30px;
+border-radius:10px;
+}
+
+.steps{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+margin-top:40px;
+}
+
+.footer{
+padding:30px;
+background:rgba(0,0,0,0.3);
+}
+
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+padding:15px;
+border-radius:50%;
+color:white;
+text-decoration:none;
+font-size:20px;
+}
+</style>
 </head>
 
 <body>
 
-<div class="container">
-    <h1>BIJO AI</h1>
-    <p>Welcome to the official AI research and innovation hub.</p>
-    <p>PROJECT NEXUS is now live.</p>
+<nav>
+<h2>BIJO AI</h2>
+<div>
+<a href="#services">Services</a>
+<a href="#how">How It Works</a>
+<a href="#contact">Contact</a>
+</div>
+</nav>
 
-    <button class="btn" onclick="alert('Future of AI loading...')">
-        Explore
-    </button>
+<section class="hero">
+<h1>Automate Your Business With AI</h1>
+<p>We build AI Chatbots & Call Agents that handle customer queries 24/7.</p>
+<a href="#contact" class="btn">Get Free Demo</a>
+</section>
 
-    <footer>
-        © 2026 BIJO AI | Journey to AGI
-    </footer>
+<section id="services">
+<h2>Our Services</h2>
+<div class="services">
+
+<div class="card">
+<h3>AI Chatbots</h3>
+<p>Website, WhatsApp & Instagram DM Bots.</p>
+</div>
+
+<div class="card">
+<h3>AI Call Agents</h3>
+<p>Answer calls & book appointments automatically.</p>
+</div>
+
+<div class="card">
+<h3>Appointment Automation</h3>
+<p>Calendar booking with reminders.</p>
+</div>
+
+<div class="card">
+<h3>Email Follow-ups</h3>
+<p>Auto email & WhatsApp follow-ups.</p>
+</div>
+
+</div>
+</section>
+
+<section id="how">
+<h2>How It Works</h2>
+<div class="steps">
+
+<div class="card">1. Contact Us</div>
+<div class="card">2. Workflow Analysis</div>
+<div class="card">3. AI Setup</div>
+<div class="card">4. Save Time & Money</div>
+
+</div>
+</section>
+
+<section>
+<h2>We Help</h2>
+<p>Clinics • Gyms • Salons • Restaurants • Real Estate • Coaching Centres</p>
+</section>
+
+<section id="contact">
+<h2>Get Your Free AI Automation Audit</h2>
+<a href="https://wa.me/YOURNUMBER" class="btn">Chat on WhatsApp</a>
+</section>
+
+<a href="https://wa.me/YOURNUMBER" class="whatsapp">💬</a>
+
+<div class="footer">
+<p>© 2026 BIJO AI | Journey to AGI</p>
 </div>
 
 </body>
