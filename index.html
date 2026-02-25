@@ -1,182 +1,347 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BIJO AI | Automate Your Business</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIJO AI | Automate Your Business</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            DEFAULT: '#00ffe7',
+                            dark: '#00ccb9',
+                        },
+                        dark: {
+                            900: '#050507',
+                            800: '#0f0f13',
+                            700: '#1a1a24',
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
-body{
-background:linear-gradient(135deg,#0f0c29,#302b63,#00c6ff);
-color:white;
-scroll-behavior:smooth;
-}
+    <style>
+        body {
+            background-color: #050507;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
 
-nav{
-display:flex;
-justify-content:space-between;
-padding:20px 50px;
-position:fixed;
-width:100%;
-top:0;
-background:rgba(0,0,0,0.2);
-backdrop-filter:blur(10px);
-}
+        /* Glassmorphism utilities */
+        .glass-nav {
+            background: rgba(5, 5, 7, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
 
-nav h2{color:#00ffe7}
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
 
-nav a{
-color:white;
-text-decoration:none;
-margin-left:20px;
-}
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 231, 0.3);
+            box-shadow: 0 10px 30px -10px rgba(0, 255, 231, 0.1);
+        }
 
-section{
-padding:100px 50px;
-text-align:center;
-}
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
 
-.hero{
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-}
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-.hero h1{
-font-size:50px;
-margin-bottom:20px;
-}
-
-.hero p{
-font-size:20px;
-margin-bottom:30px;
-}
-
-.btn{
-padding:12px 25px;
-background:#00ffe7;
-border:none;
-border-radius:30px;
-color:black;
-cursor:pointer;
-text-decoration:none;
-}
-
-.services{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-margin-top:40px;
-}
-
-.card{
-background:rgba(255,255,255,0.1);
-padding:30px;
-border-radius:10px;
-}
-
-.steps{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:20px;
-margin-top:40px;
-}
-
-.footer{
-padding:30px;
-background:rgba(0,0,0,0.3);
-}
-
-.whatsapp{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#25D366;
-padding:15px;
-border-radius:50%;
-color:white;
-text-decoration:none;
-font-size:20px;
-}
-</style>
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #ffffff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .text-gradient-brand {
+            background: linear-gradient(to right, #00ffe7, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
 </head>
+<body class="antialiased selection:bg-brand selection:text-black">
 
-<body>
+    <!-- Background Glow Effects -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-brand/10 blur-[120px] mix-blend-screen animate-blob"></div>
+        <div class="absolute top-[20%] right-[-10%] w-[30%] h-[30%] rounded-full bg-blue-600/10 blur-[120px] mix-blend-screen animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-[-10%] left-[20%] w-[40%] h-[40%] rounded-full bg-purple-600/10 blur-[120px] mix-blend-screen animate-blob animation-delay-4000"></div>
+    </div>
 
-<nav>
-<h2>BIJO AI</h2>
-<div>
-<a href="#services">Services</a>
-<a href="#how">How It Works</a>
-<a href="#contact">Contact</a>
-</div>
-</nav>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <h2 class="text-2xl font-bold tracking-tighter text-white flex items-center gap-2">
+                        <i data-lucide="cpu" class="text-brand w-6 h-6"></i>
+                        BIJO <span class="text-brand">AI</span>
+                    </h2>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#services" class="text-gray-300 hover:text-white transition-colors text-sm font-medium">Services</a>
+                        <a href="#how" class="text-gray-300 hover:text-white transition-colors text-sm font-medium">How It Works</a>
+                        <a href="#contact" class="text-gray-300 hover:text-white transition-colors text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <a href="https://wa.me/919778074879" class="text-brand text-sm font-medium border border-brand/30 px-4 py-2 rounded-full">Chat</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-<section class="hero">
-<h1>Automate Your Business With AI</h1>
-<p>We build AI Chatbots & Call Agents that handle customer queries 24/7.</p>
-<a href="#contact" class="btn">Get Free Demo</a>
-</section>
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex flex-col justify-center min-h-screen">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center reveal">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-brand text-sm font-medium mb-8">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-brand"></span>
+                </span>
+                Next-Gen Automation
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+                Automate Your Business <br class="hidden md:block" />
+                <span class="text-gradient-brand">With AI</span>
+            </h1>
+            
+            <p class="mt-4 text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 font-light">
+                We build intelligent AI Chatbots & Call Agents that handle customer queries, book appointments, and scale your operations <span class="text-white font-medium">24/7</span>.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#contact" class="w-full sm:w-auto px-8 py-4 bg-brand hover:bg-brand-dark text-black font-semibold rounded-full transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,255,231,0.3)] hover:shadow-[0_0_30px_rgba(0,255,231,0.5)]">
+                    Get Free Demo <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+                <a href="#services" class="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium rounded-full transition-all duration-300 flex items-center justify-center">
+                    Explore Services
+                </a>
+            </div>
+        </div>
+    </section>
 
-<section id="services">
-<h2>Our Services</h2>
-<div class="services">
+    <!-- Services Section -->
+    <section id="services" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                <h2 class="text-brand font-semibold tracking-wide uppercase text-sm mb-2">Capabilities</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-gradient">Our AI Services</h3>
+            </div>
 
-<div class="card">
-<h3>AI Chatbots</h3>
-<p>Website, WhatsApp & Instagram DM Bots.</p>
-</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+                <!-- Service 1 -->
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center mb-6 border border-brand/20">
+                        <i data-lucide="message-square-text" class="text-brand w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">AI Chatbots</h3>
+                    <p class="text-gray-400 leading-relaxed">Intelligent conversational agents for your Website, WhatsApp & Instagram DMs to engage leads instantly.</p>
+                </div>
 
-<div class="card">
-<h3>AI Call Agents</h3>
-<p>Answer calls & book appointments automatically.</p>
-</div>
+                <!-- Service 2 -->
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 border border-blue-500/20">
+                        <i data-lucide="phone-call" class="text-blue-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">AI Call Agents</h3>
+                    <p class="text-gray-400 leading-relaxed">Human-sounding voice AI that answers inbound calls, makes outbound dials, and handles customer support.</p>
+                </div>
 
-<div class="card">
-<h3>Appointment Automation</h3>
-<p>Calendar booking with reminders.</p>
-</div>
+                <!-- Service 3 -->
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 border border-purple-500/20">
+                        <i data-lucide="calendar-clock" class="text-purple-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Appointment Automation</h3>
+                    <p class="text-gray-400 leading-relaxed">Seamless calendar booking with automated reminders to eliminate no-shows and keep your schedule full.</p>
+                </div>
 
-<div class="card">
-<h3>Email Follow-ups</h3>
-<p>Auto email & WhatsApp follow-ups.</p>
-</div>
+                <!-- Service 4 -->
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 bg-pink-500/10 rounded-xl flex items-center justify-center mb-6 border border-pink-500/20">
+                        <i data-lucide="mail-check" class="text-pink-400 w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Email Follow-ups</h3>
+                    <p class="text-gray-400 leading-relaxed">Smart, personalized auto-email and WhatsApp follow-up sequences to nurture leads and close more deals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-</div>
-</section>
+    <!-- How It Works Section -->
+    <section id="how" class="py-24 bg-dark-800/50 border-y border-white/5 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                <h2 class="text-brand font-semibold tracking-wide uppercase text-sm mb-2">The Process</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-gradient">How It Works</h3>
+            </div>
 
-<section id="how">
-<h2>How It Works</h2>
-<div class="steps">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 reveal">
+                <!-- Step 1 -->
+                <div class="relative text-center group">
+                    <div class="w-16 h-16 mx-auto bg-dark-700 border border-white/10 rounded-full flex items-center justify-center text-2xl font-bold text-white mb-6 relative z-10 group-hover:border-brand transition-colors">
+                        1
+                    </div>
+                    <div class="hidden lg:block absolute top-8 left-[60%] w-[80%] h-[1px] bg-gradient-to-r from-white/20 to-transparent"></div>
+                    <h4 class="text-lg font-semibold mb-2">Contact Us</h4>
+                    <p class="text-sm text-gray-400">Reach out for a free consultation.</p>
+                </div>
 
-<div class="card">1. Contact Us</div>
-<div class="card">2. Workflow Analysis</div>
-<div class="card">3. AI Setup</div>
-<div class="card">4. Save Time & Money</div>
+                <!-- Step 2 -->
+                <div class="relative text-center group">
+                    <div class="w-16 h-16 mx-auto bg-dark-700 border border-white/10 rounded-full flex items-center justify-center text-2xl font-bold text-white mb-6 relative z-10 group-hover:border-brand transition-colors">
+                        2
+                    </div>
+                    <div class="hidden lg:block absolute top-8 left-[60%] w-[80%] h-[1px] bg-gradient-to-r from-white/20 to-transparent"></div>
+                    <h4 class="text-lg font-semibold mb-2">Workflow Analysis</h4>
+                    <p class="text-sm text-gray-400">We audit your current processes.</p>
+                </div>
 
-</div>
-</section>
+                <!-- Step 3 -->
+                <div class="relative text-center group">
+                    <div class="w-16 h-16 mx-auto bg-dark-700 border border-white/10 rounded-full flex items-center justify-center text-2xl font-bold text-white mb-6 relative z-10 group-hover:border-brand transition-colors">
+                        3
+                    </div>
+                    <div class="hidden lg:block absolute top-8 left-[60%] w-[80%] h-[1px] bg-gradient-to-r from-white/20 to-transparent"></div>
+                    <h4 class="text-lg font-semibold mb-2">AI Setup</h4>
+                    <p class="text-sm text-gray-400">We build & integrate your custom AI.</p>
+                </div>
 
-<section>
-<h2>We Help</h2>
-<p>Clinics • Gyms • Salons • Restaurants • Real Estate • Coaching Centres</p>
-</section>
+                <!-- Step 4 -->
+                <div class="relative text-center group">
+                    <div class="w-16 h-16 mx-auto bg-brand shadow-[0_0_15px_rgba(0,255,231,0.4)] rounded-full flex items-center justify-center text-2xl font-bold text-black mb-6 relative z-10">
+                        <i data-lucide="rocket" class="w-6 h-6"></i>
+                    </div>
+                    <h4 class="text-lg font-semibold mb-2 text-brand">Save Time & Money</h4>
+                    <p class="text-sm text-gray-400">Watch your efficiency skyrocket.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section id="contact">
-<h2>Get Your Free AI Automation Audit</h2>
-<a href="https://wa.me/919778074879" class="btn">Chat on WhatsApp</a>
-</section>
+    <!-- Industries Section -->
+    <section class="py-20 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center reveal">
+            <h2 class="text-2xl font-bold mb-8 text-white">Industries We Transform</h2>
+            <div class="flex flex-wrap justify-center gap-3 md:gap-4">
+                <span class="px-5 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-300 text-sm font-medium hover:bg-white/10 hover:text-white transition-colors cursor-default">🏥 Clinics</span>
+                <span class="px-5 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-300 text-sm font-medium hover:bg-white/10 hover:text-white transition-colors cursor-default">💪 Gyms</span>
+                <span class="px-5 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-300 text-sm font-medium hover:bg-white/10 hover:text-white transition-colors cursor-default">✂️ Salons</span>
+                <span class="px-5 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-300 text-sm font-medium hover:bg-white/10 hover:text-white transition-colors cursor-default">🍽️ Restaurants</span>
+                <span class="px-5 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-300 text-sm font-medium hover:bg-white/10 hover:text-white transition-colors cursor-default">🏢 Real Estate</span>
+                <span class="px-5 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-300 text-sm font-medium hover:bg-white/10 hover:text-white transition-colors cursor-default">📚 Coaching Centres</span>
+            </div>
+        </div>
+    </section>
 
-<a href="https://wa.me/919778074879" class="whatsapp">💬</a>
+    <!-- CTA Section -->
+    <section id="contact" class="py-24 relative z-10">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8">
+            <div class="glass-card p-10 md:p-16 rounded-3xl text-center border-brand/20 relative overflow-hidden">
+                <!-- Inner glow -->
+                <div class="absolute inset-0 bg-gradient-to-b from-brand/5 to-transparent pointer-events-none"></div>
+                
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 text-white relative z-10">Ready to scale?</h2>
+                <p class="text-gray-400 mb-10 max-w-xl mx-auto text-lg relative z-10">Get Your Free AI Automation Audit today. We'll show you exactly how much time and money AI can save your specific business.</p>
+                
+                <a href="https://wa.me/919778074879" target="_blank" class="inline-flex items-center gap-2 px-8 py-4 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold rounded-full transition-all duration-300 text-lg shadow-[0_0_20px_rgba(37,211,102,0.3)] hover:shadow-[0_0_30px_rgba(37,211,102,0.5)] hover:-translate-y-1 relative z-10">
+                    <i data-lucide="message-circle" class="w-6 h-6 fill-current"></i>
+                    Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
 
-<div class="footer">
-<p>© 2026 BIJO AI | Journey to AGI</p>
-</div>
+    <!-- Footer -->
+    <footer class="border-t border-white/10 bg-dark-900 py-10 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div class="flex items-center gap-2 text-xl font-bold tracking-tighter text-white">
+                <i data-lucide="cpu" class="text-brand w-5 h-5"></i>
+                BIJO <span class="text-brand">AI</span>
+            </div>
+            <p class="text-gray-500 text-sm">© 2026 BIJO AI | Journey to AGI</p>
+        </div>
+    </footer>
 
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/919778074879" target="_blank" class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:shadow-[0_0_20px_rgba(37,211,102,0.5)] transition-all hover:scale-110 flex items-center justify-center group">
+        <i data-lucide="message-circle" class="w-7 h-7 fill-current"></i>
+        <!-- Tooltip -->
+        <span class="absolute right-full mr-4 bg-dark-700 text-white text-sm px-3 py-1.5 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-white/10">
+            Chat with us
+        </span>
+    </a>
+
+    <!-- Initialize Icons and Scroll Reveal Script -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Scroll Reveal Logic
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+    </script>
 </body>
 </html>
-
