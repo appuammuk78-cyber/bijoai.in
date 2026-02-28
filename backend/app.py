@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
 import sqlite3
 import os
@@ -179,6 +179,76 @@ Time: {time}
         print("Email error:", e)
 
     return jsonify({"message": "Booking Confirmed"})
+
+
+# =========================
+# ADMIN ROUTE
+# =========================
+def check_auth(username, password):
+    # Retrieve credentials from environment variables securely
+    admin_user = os.environ.get("ADMIN_USER", "kamal_admin")
+    admin_pass = os.environ.get("ADMIN_PASS", "AGI2026!")
+    return username == admin_user and password == admin_pass
+
+def authenticate():
+    return Response(
+        'Could not verify your access level for that URL.\n'
+        'You have to login with proper credentials', 401,
+        {'WWW-Authenticate': 'Basic realm="Login Required"'})
+
+@app.route("/admin/bookings")
+def view_bookings():
+    auth = request.authorization
+    if not auth or not check_auth(auth.username, auth.password):
+        return authenticate()
+
+    try:
+        conn, db_type = get_db_connection()
+        c = conn.cursor()
+        c.execute("SELECT * FROM bookings ORDER BY id DESC")
+        
+        if db_type == "postgres":
+            rows = c.fetchall()
+            columns = [desc[0] for desc in c.description]
+            bookings = [dict(zip(columns, row)) for row in rows]
+        else:
+            bookings = [dict(row) for row in c.fetchall()]
+            
+        conn.close()
+
+        # Build a simple HTML table
+        html = """
+        <html>
+        <head>
+            <title>Kamal AI Admin - Bookings</title>
+            <style>
+                body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+                table { border-collapse: collapse; width: 100%; background: white; }
+                th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+                th { background-color: #00ccb9; color: white; }
+                tr:nth-child(even) { background-color: #f9f9f9; }
+            </style>
+        </head>
+        <body>
+            <h2>Kamal AI - Booking Entries</h2>
+            <table>
+                <tr>
+                    <th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Date</th><th>Time</th>
+                </tr>
+        """
+        for b in bookings:
+            html += f"<tr><td>{b['id']}</td><td>{b['name']}</td><td>{b['email']}</td><td>{b['phone']}</td><td>{b['date']}</td><td>{b['time']}</td></tr>"
+        
+        html += """
+            </table>
+        </body>
+        </html>
+        """
+        
+        return html
+    
+    except Exception as e:
+        return f"Error fetching bookings: {str(e)}"
 
 
 # =========================
