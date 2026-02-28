@@ -5,26 +5,58 @@ import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
+import psycopg2
+from psycopg2.extras import RealDictCursor
+
 app = Flask(__name__)
 CORS(app)
 
 
 # =========================
+# DATABASE CONNECTION
+# =========================
+def get_db_connection():
+    db_url = os.environ.get("DATABASE_URL")
+    if db_url:
+        # Use psycopg2 for PostgreSQL on Render
+        conn = psycopg2.connect(db_url)
+        return conn, "postgres"
+    else:
+        # Fallback to SQLite for local dev
+        conn = sqlite3.connect("appointments.db")
+        conn.row_factory = sqlite3.Row
+        return conn, "sqlite"
+
+# =========================
 # DATABASE INITIALIZATION
 # =========================
 def init_db():
-    conn = sqlite3.connect("appointments.db")
+    conn, db_type = get_db_connection()
     c = conn.cursor()
-    c.execute("""
-        CREATE TABLE IF NOT EXISTS bookings (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            email TEXT,
-            phone TEXT,
-            date TEXT,
-            time TEXT
-        )
-    """)
+    
+    if db_type == "postgres":
+        c.execute("""
+            CREATE TABLE IF NOT EXISTS bookings (
+                id SERIAL PRIMARY KEY,
+                name TEXT,
+                email TEXT,
+                phone TEXT,
+                date TEXT,
+                time TEXT
+            )
+        """)
+    else:
+        c.execute("""
+            CREATE TABLE IF NOT EXISTS bookings (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT,
+                email TEXT,
+                phone TEXT,
+                date TEXT,
+                time TEXT
+            )
+        """)
+    
     conn.commit()
     conn.close()
 
@@ -55,12 +87,20 @@ def book():
     time = data.get("time")
 
     # Save to database
-    conn = sqlite3.connect("appointments.db")
+    conn, db_type = get_db_connection()
     c = conn.cursor()
-    c.execute(
-        "INSERT INTO bookings (name, email, phone, date, time) VALUES (?, ?, ?, ?, ?)",
-        (name, email, phone, date, time)
-    )
+    
+    if db_type == "postgres":
+        c.execute(
+            "INSERT INTO bookings (name, email, phone, date, time) VALUES (%s, %s, %s, %s, %s)",
+            (name, email, phone, date, time)
+        )
+    else:
+        c.execute(
+            "INSERT INTO bookings (name, email, phone, date, time) VALUES (?, ?, ?, ?, ?)",
+            (name, email, phone, date, time)
+        )
+        
     conn.commit()
     conn.close()
 
