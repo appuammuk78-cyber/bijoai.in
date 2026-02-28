@@ -5,8 +5,11 @@ import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
-import psycopg2
-from psycopg2.extras import RealDictCursor
+try:
+    import psycopg2
+    from psycopg2.extras import RealDictCursor
+except ImportError:
+    pass  # psycopg2 is only required when DATABASE_URL is set (e.g. on Render)
 
 app = Flask(__name__)
 CORS(app)
@@ -179,6 +182,81 @@ Time: {time}
         print("Email error:", e)
 
     return jsonify({"message": "Booking Confirmed"})
+
+
+# =========================
+# USER DASHBOARD API
+# =========================
+@app.route("/api/user-dashboard", methods=["GET"])
+def user_dashboard():
+    email = request.args.get("email")
+    if not email:
+        return jsonify({"error": "Email parameter is required"}), 400
+
+    conn, db_type = get_db_connection()
+    c = conn.cursor()
+    
+    # In a real app, we'd filter by an 'agent_owner' or similar field. 
+    # For now, to show real data, we'll fetch all bookings but pretend 
+    # they belong to this user's agents for the demo.
+    c.execute("SELECT * FROM bookings ORDER BY id DESC")
+    
+    if db_type == "postgres":
+        rows = c.fetchall()
+        columns = [desc[0] for desc in c.description]
+        bookings = [dict(zip(columns, row)) for row in rows]
+    else:
+        bookings = [dict(row) for row in c.fetchall()]
+        
+    conn.close()
+
+    total_calls = len(bookings)
+    hours_saved = total_calls * 0.25  # assuming 15 mins per call average
+    cost_saved = hours_saved * 15     # assuming $15/hr
+
+    # Mock some bots for this specific user
+    user_name = email.split('@')[0].capitalize()
+    active_agents = [
+        {
+            "id": 1,
+            "name": f"{user_name}'s Support Bot",
+            "type": "Voice & WhatsApp • Hindi/English",
+            "status": "On Call",
+            "duration": "02:14",
+            "gradient": "from-brand to-blue-500",
+            "icon": "headset"
+        },
+        {
+            "id": 2,
+            "name": f"{user_name}'s Scheduler",
+            "type": "Website Widget • English",
+            "status": "Standby",
+            "duration": "Last active: 5m ago",
+            "gradient": "from-purple-500 to-pink-500",
+            "icon": "calendar"
+        }
+    ]
+
+    # Format recent activity
+    recent_activity = []
+    for b in bookings[:5]: # just the 5 most recent
+        recent_activity.append({
+            "title": "Appointment Booked",
+            "desc": f"{b['name']} ({b['phone']}) booked for {b['date']} at {b['time']}.",
+            "time_ago": "Recently",
+            "color": "bg-purple-500"
+        })
+
+    return jsonify({
+        "stats": {
+            "total_calls": total_calls,
+            "active_agents": len(active_agents),
+            "hours_saved": int(hours_saved),
+            "cost_saved": int(cost_saved)
+        },
+        "active_agents": active_agents,
+        "recent_activity": recent_activity
+    })
 
 
 # =========================
