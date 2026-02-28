@@ -145,8 +145,6 @@
                             class="text-gray-300 hover:text-white transition-colors text-sm font-medium">Live Demo</a>
                         <a href="#how" class="text-gray-300 hover:text-white transition-colors text-sm font-medium">How
                             It Works</a>
-                        <a href="#contact"
-                            class="text-gray-300 hover:text-white transition-colors text-sm font-medium">Contact</a>
                         <button onclick="openLoginModal()"
                             class="text-black bg-brand hover:bg-brand-dark px-4 py-2 rounded-full text-sm font-semibold transition-colors shadow-[0_0_15px_rgba(0,255,231,0.2)]">Login</button>
                     </div>
@@ -185,10 +183,10 @@
             </p>
 
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#contact"
+                <button onclick="openLoginModal()"
                     class="w-full sm:w-auto px-8 py-4 bg-brand hover:bg-brand-dark text-black font-semibold rounded-full transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,255,231,0.3)] hover:shadow-[0_0_30px_rgba(0,255,231,0.5)]">
                     Get Free Demo <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                </a>
+                </button>
                 <a href="#services"
                     class="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium rounded-full transition-all duration-300 flex items-center justify-center">
                     Explore Services
@@ -327,8 +325,8 @@
                     <div
                         class="hidden lg:block absolute top-8 left-[60%] w-[80%] h-[1px] bg-gradient-to-r from-white/20 to-transparent">
                     </div>
-                    <h4 class="text-lg font-semibold mb-2">Contact Us</h4>
-                    <p class="text-sm text-gray-400">Reach out for a free consultation.</p>
+                    <h4 class="text-lg font-semibold mb-2">Sign Up</h4>
+                    <p class="text-sm text-gray-400">Log in to create your agency account.</p>
                 </div>
 
                 <!-- Step 2 -->
@@ -397,41 +395,6 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section id="contact" class="py-12 md:py-24 relative z-10 min-h-screen flex items-center justify-center">
-        <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div
-                class="glass-card p-6 md:p-12 rounded-3xl text-center border-brand/20 relative overflow-hidden flex flex-col items-center">
-                <!-- Inner glow -->
-                <div class="absolute inset-0 bg-gradient-to-b from-brand/5 to-transparent pointer-events-none"></div>
-
-                <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white relative z-10 w-full">Ready to scale?</h2>
-                <p class="text-gray-400 mb-8 max-w-2xl mx-auto text-base md:text-lg relative z-10 w-full">Get Your Free
-                    AI Automation Audit today. We'll show you exactly how much time and money AI can save your specific
-                    business.</p>
-
-                <!-- Calendly inline widget begin -->
-                <div class="w-full relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-[#0f0f13] flex justify-center mx-auto"
-                    style="max-width: 900px;">
-                    <div id="calendly-embed" class="w-full h-[650px] md:h-[700px]"></div>
-                    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"
-                        async></script>
-                    <script>
-                        window.onload = function () {
-                            Calendly.initInlineWidget({
-                                url: 'https://calendly.com/appuammuk78/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=0f0f13&text_color=ffffff&primary_color=00ffe7',
-                                parentElement: document.getElementById('calendly-embed'),
-                                prefill: {},
-                                utm: {}
-                            });
-                        }
-                    </script>
-                </div>
-                <!-- Calendly inline widget end -->
-
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
     <footer class="border-t border-white/10 bg-dark-900 py-10 relative z-10">
@@ -475,19 +438,19 @@
                     <i data-lucide="cpu" class="text-brand w-6 h-6"></i>
                     KAMAL <span class="text-brand">AI</span>
                 </div>
-                <h3 class="text-xl font-semibold text-white">Welcome Back</h3>
-                <p class="text-gray-400 text-sm mt-2">Sign in to manage your AI agents and calls.</p>
+                <h3 class="text-xl font-semibold text-white">Sign In / Sign Up</h3>
+                <p class="text-gray-400 text-sm mt-2">Use your Google account to log in or create a new account.</p>
             </div>
 
             <!-- Real Google Sign-In Button -->
             <div id="g_id_onload"
                 data-client_id="439946564033-cugrdagig15lmn86e66c88dnru3vbvc4.apps.googleusercontent.com"
-                data-context="signin" data-ux_mode="popup" data-callback="handleCredentialResponse"
+                data-context="use" data-ux_mode="popup" data-callback="handleCredentialResponse"
                 data-auto_prompt="false">
             </div>
 
             <div class="g_id_signin flex justify-center w-full mt-4" data-type="standard" data-shape="rectangular"
-                data-theme="outline" data-text="continue_with" data-size="large" data-logo_alignment="left">
+                data-theme="outline" data-text="signin_with" data-size="large" data-logo_alignment="left">
             </div>
 
             <p class="text-xs text-gray-500 text-center mt-6">

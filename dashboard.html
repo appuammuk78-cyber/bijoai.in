@@ -141,43 +141,44 @@
         <div class="flex-1 py-6 px-4 space-y-2 overflow-y-auto">
             <p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Main Menu</p>
 
-            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-brand/10 text-brand font-medium">
+            <button onclick="switchTab('overview')" id="nav-overview"
+                class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-brand/10 text-brand font-medium transition-colors">
                 <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
                 Overview
-            </a>
-            <a href="#"
-                class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors">
+            </button>
+            <button onclick="switchTab('agents')" id="nav-agents"
+                class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors">
                 <i data-lucide="bot" class="w-5 h-5"></i>
                 AI Agents
-            </a>
-            <a href="#"
-                class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors">
+            </button>
+            <button onclick="switchTab('logs')" id="nav-logs"
+                class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors">
                 <i data-lucide="phone-call" class="w-5 h-5"></i>
                 Call Logs
-            </a>
-            <a href="#"
-                class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors">
+            </button>
+            <button onclick="switchTab('threads')" id="nav-threads"
+                class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors">
                 <i data-lucide="message-square" class="w-5 h-5"></i>
                 Chat Threads
-            </a>
-            <a href="#"
-                class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors">
+            </button>
+            <button onclick="switchTab('analytics')" id="nav-analytics"
+                class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors">
                 <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
                 Analytics
-            </a>
+            </button>
 
             <p class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mt-8 mb-4">Settings</p>
 
-            <a href="#"
-                class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors">
+            <button onclick="switchTab('billing')" id="nav-billing"
+                class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors">
                 <i data-lucide="credit-card" class="w-5 h-5"></i>
                 Billing
-            </a>
-            <a href="#"
-                class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors">
+            </button>
+            <button onclick="switchTab('settings')" id="nav-settings"
+                class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors">
                 <i data-lucide="settings" class="w-5 h-5"></i>
                 Preferences
-            </a>
+            </button>
         </div>
 
         <div class="p-4 border-t border-white/5">
@@ -217,8 +218,9 @@
         </header>
 
         <!-- Scrollable Main Area -->
-        <main class="flex-1 overflow-y-auto p-8">
-            <div class="max-w-6xl mx-auto space-y-8">
+        <main class="flex-1 overflow-y-auto p-8 relative">
+            <!-- TAB: OVERVIEW -->
+            <div id="tab-overview" class="max-w-6xl mx-auto space-y-8 tab-content">
 
                 <!-- Welcome Banner -->
                 <div class="glass-card rounded-2xl p-8 relative overflow-hidden flex items-center justify-between">
@@ -319,7 +321,112 @@
                     </div>
 
                 </div>
+                <!-- Start: Activation / Contact Section -->
+                <div
+                    class="glass-card rounded-2xl p-8 mt-12 border-brand/20 relative overflow-hidden flex flex-col items-center text-center">
+                    <div class="absolute inset-0 bg-gradient-to-b from-brand/5 to-transparent pointer-events-none">
+                    </div>
+                    <h2 class="text-3xl font-bold mb-4 text-white relative z-10 w-full">Activate Your Agents & Scale
+                    </h2>
+                    <p class="text-gray-400 mb-8 max-w-2xl mx-auto text-base relative z-10 w-full">
+                        Need more active AI agents? Contact our team for a free consultation and let us build the
+                        perfect automation for your workflow.
+                    </p>
+
+                    <!-- Calendly inline widget begin -->
+                    <div class="w-full relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-[#0f0f13] flex justify-center mx-auto"
+                        style="max-width: 900px;">
+                        <div id="calendly-embed" class="w-full h-[650px] md:h-[700px]"></div>
+                        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"
+                            async></script>
+                        <script>
+                            window.onload = function () {
+                                Calendly.initInlineWidget({
+                                    url: 'https://calendly.com/appuammuk78/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=0f0f13&text_color=ffffff&primary_color=00ffe7',
+                                    parentElement: document.getElementById('calendly-embed'),
+                                    prefill: {},
+                                    utm: {}
+                                });
+                            }
+                        </script>
+                    </div>
+                </div>
+                <!-- End: Activation / Contact Section -->
+
+            </div> <!-- END TAB: OVERVIEW -->
+
+            <!-- TAB: AI AGENTS -->
+            <div id="tab-agents" class="max-w-6xl mx-auto space-y-8 tab-content hidden">
+                <div class="glass-card rounded-2xl p-8 text-center text-gray-400 py-24">
+                    <div
+                        class="w-16 h-16 mx-auto bg-dark-700 border border-white/10 rounded-full flex items-center justify-center text-brand mb-6 shadow-[0_0_15px_rgba(0,255,231,0.2)]">
+                        <i data-lucide="bot" class="w-8 h-8"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white mb-2">Manage AI Agents</h2>
+                    <p>Detailed configuration for all your deployed chatbots and voice agents will appear here.</p>
+                </div>
             </div>
+
+            <!-- TAB: CALL LOGS -->
+            <div id="tab-logs" class="max-w-6xl mx-auto space-y-8 tab-content hidden">
+                <div class="glass-card rounded-2xl p-8 text-center text-gray-400 py-24">
+                    <div
+                        class="w-16 h-16 mx-auto bg-dark-700 border border-white/10 rounded-full flex items-center justify-center text-blue-400 mb-6">
+                        <i data-lucide="phone-call" class="w-8 h-8"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white mb-2">Detailed Call Logs</h2>
+                    <p>Listen back to recordings, view transcripts, and analyze sentiment of previous calls.</p>
+                </div>
+            </div>
+
+            <!-- TAB: CHAT THREADS -->
+            <div id="tab-threads" class="max-w-6xl mx-auto space-y-8 tab-content hidden">
+                <div class="glass-card rounded-2xl p-8 text-center text-gray-400 py-24">
+                    <div
+                        class="w-16 h-16 mx-auto bg-dark-700 border border-white/10 rounded-full flex items-center justify-center text-green-400 mb-6">
+                        <i data-lucide="message-square" class="w-8 h-8"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white mb-2">Chat Intercept</h2>
+                    <p>View real-time chat threads from your website and social media DMs handled by AI.</p>
+                </div>
+            </div>
+
+            <!-- TAB: ANALYTICS -->
+            <div id="tab-analytics" class="max-w-6xl mx-auto space-y-8 tab-content hidden">
+                <div class="glass-card rounded-2xl p-8 text-center text-gray-400 py-24">
+                    <div
+                        class="w-16 h-16 mx-auto bg-dark-700 border border-white/10 rounded-full flex items-center justify-center text-yellow-400 mb-6">
+                        <i data-lucide="bar-chart-2" class="w-8 h-8"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white mb-2">Advanced Analytics</h2>
+                    <p>Track conversion rates, ROI breakdown, and deep agent performance metrics.</p>
+                </div>
+            </div>
+
+            <!-- TAB: BILLING -->
+            <div id="tab-billing" class="max-w-6xl mx-auto space-y-8 tab-content hidden">
+                <div class="glass-card rounded-2xl p-8 text-center text-gray-400 py-24">
+                    <div
+                        class="w-16 h-16 mx-auto bg-dark-700 border border-white/10 rounded-full flex items-center justify-center text-purple-400 mb-6">
+                        <i data-lucide="credit-card" class="w-8 h-8"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white mb-2">Billing & Upgrades</h2>
+                    <p>Manage your payment methods, view invoices, and upgrade your agent limits.</p>
+                </div>
+            </div>
+
+            <!-- TAB: SETTINGS -->
+            <div id="tab-settings" class="max-w-6xl mx-auto space-y-8 tab-content hidden">
+                <div class="glass-card rounded-2xl p-8 text-center text-gray-400 py-24">
+                    <div
+                        class="w-16 h-16 mx-auto bg-dark-700 border border-white/10 rounded-full flex items-center justify-center text-gray-300 mb-6">
+                        <i data-lucide="settings" class="w-8 h-8"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white mb-2">Account Preferences</h2>
+                    <p>Update your profile details, notification settings, and team access.</p>
+                </div>
+            </div>
+
         </main>
 
     </div>
@@ -401,7 +508,7 @@
                             activityContainer.innerHTML = '<p class="text-sm text-gray-500 p-4">No recent activity.</p>';
                         }
 
-                        // Re-initialize icons for newly added HTML
+                        <!-- Re-initialize icons for newly added HTML -->
                         lucide.createIcons();
 
                     } else {
@@ -412,6 +519,34 @@
                 }
             }
         });
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(tab => tab.classList.add('hidden'));
+
+            // Show selected tab
+            const target = document.getElementById('tab-' + tabId);
+            if (target) target.classList.remove('hidden');
+
+            // Reset all nav highlights
+            const navIds = ['overview', 'agents', 'logs', 'threads', 'analytics', 'billing', 'settings'];
+            navIds.forEach(id => {
+                const btn = document.getElementById('nav-' + id);
+                if (btn) {
+                    btn.classList.remove('bg-brand/10', 'text-brand');
+                    btn.classList.add('text-gray-400', 'hover:bg-white/5', 'hover:text-white');
+                }
+            });
+
+            // Highlight active nav
+            const activeBtn = document.getElementById('nav-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-gray-400', 'hover:bg-white/5', 'hover:text-white');
+                activeBtn.classList.add('bg-brand/10', 'text-brand');
+            }
+        }
 
         // Logout function
         function logout() {
