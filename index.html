@@ -346,26 +346,46 @@
                 
                 <h2 class="text-3xl md:text-5xl font-bold mb-6 text-white relative z-10">Ready to scale?</h2>
                 <p class="text-gray-400 mb-10 max-w-xl mx-auto text-lg relative z-10">Get Your Free AI Automation Audit today. We'll show you exactly how much time and money AI can save your specific business.</p>
-                <form id="bookingForm" class="space-y-4 max-w-md mx-auto">
-    <input type="text" id="name" placeholder="Full Name" required
-        class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white">
-    <input type="email" id="email" placeholder="Email Address" required
-class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 text-white">
+                
+                <div id="formContainer">
+                    <form id="bookingForm" class="space-y-4 max-w-md mx-auto">
+                        <input type="text" id="name" placeholder="Full Name" required
+                            class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand transition-colors">
+                        <input type="email" id="email" placeholder="Email Address" required
+                            class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 text-white focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand transition-colors">
+                        
+                        <input type="tel" id="phone" placeholder="Phone Number" required
+                            class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand transition-colors">
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="date" id="date" required
+                                class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand transition-colors">
+                            
+                            <input type="time" id="time" required
+                                class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand transition-colors">
+                        </div>
+                        
+                        <button type="submit" id="submitBtn"
+                            class="w-full px-6 py-3 bg-brand hover:bg-brand-dark text-black font-bold rounded-lg transition-all duration-300 flex items-center justify-center gap-2">
+                            <span>Book Appointment</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                    </form>
+                </div>
 
-    <input type="tel" id="phone" placeholder="Phone Number" required
-        class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white">
+                <!-- Success Message Container (Hidden by default) -->
+                <div id="successMessage" class="hidden flex flex-col items-center justify-center py-8 relative z-10">
+                    <div class="w-16 h-16 bg-brand/20 rounded-full flex items-center justify-center text-brand mb-4">
+                        <i data-lucide="check-circle" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Booking Confirmed!</h3>
+                    <p class="text-gray-400 max-w-sm mx-auto">Thank you for scheduling a demo. We have sent a confirmation email to your inbox and will be in touch shortly.</p>
+                </div>
 
-    <input type="date" id="date" required
-        class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white">
-
-    <input type="time" id="time" required
-        class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white">
-
-    <button type="submit"
-        class="w-full px-6 py-3 bg-brand text-black font-bold rounded-lg">
-        Book Appointment
-    </button>
-</form>
+                <!-- Error Message Container (Hidden by default) -->
+                <div id="errorMessage" class="hidden mt-4 text-red-400 text-sm relative z-10 bg-red-500/10 border border-red-500/20 py-2 px-4 rounded-lg max-w-md mx-auto">
+                    Oops! Something went wrong. Please try again or contact us on WhatsApp.
+                </div>
                 
             </div>
         </div>
@@ -415,6 +435,19 @@ class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 text-white
     <script>
 document.getElementById("bookingForm").addEventListener("submit", function(e) {
     e.preventDefault();
+    
+    const submitBtn = document.getElementById("submitBtn");
+    const originalBtnHTML = submitBtn.innerHTML;
+    const errorMessage = document.getElementById("errorMessage");
+    
+    // Hide previous errors
+    errorMessage.classList.add("hidden");
+    
+    // Set loading state
+    submitBtn.disabled = true;
+    submitBtn.classList.add("opacity-75", "cursor-not-allowed");
+    submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Booking...';
+    lucide.createIcons();
 
     fetch("https://kamal-ai-backend.onrender.com/book", {
         method: "POST",
@@ -429,14 +462,26 @@ document.getElementById("bookingForm").addEventListener("submit", function(e) {
             time: document.getElementById("time").value
         })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+    })
     .then(data => {
-        alert("Appointment booked successfully!");
+        // Hide form and show success message
+        document.getElementById("formContainer").classList.add("hidden");
+        const successMsg = document.getElementById("successMessage");
+        successMsg.classList.remove("hidden");
+        successMsg.classList.add("flex"); // Ensure flex is applied when unhidden
         document.getElementById("bookingForm").reset();
     })
     .catch(error => {
-        alert("Booking failed.");
         console.error(error);
+        // Show error message and restore button
+        errorMessage.classList.remove("hidden");
+        submitBtn.disabled = false;
+        submitBtn.classList.remove("opacity-75", "cursor-not-allowed");
+        submitBtn.innerHTML = originalBtnHTML;
+        lucide.createIcons();
     });
 });
 </script>
